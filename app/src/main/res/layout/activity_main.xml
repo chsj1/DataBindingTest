@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data class="MyBinding">
+
+        <!--import节点的基本使用-->
+        <import type="test.hjd.com.databindingtest.model.User" />
+
+        <import
+            alias="User1"
+            type="test.hjd.com.databindingtest.model1.User" />
+
+        <!--variable节点的基本使用-->
+        <variable
+            name="userInfo"
+            type="test.hjd.com.databindingtest.model.User" />
+
+        <variable
+            name="userInfo1"
+            type="User" />
+
+
+        <variable
+            name="userInfo2"
+            type="User1" />
+
+
+        <variable
+            name="goods"
+            type="test.hjd.com.databindingtest.model.Goods" />
+
+
+        <variable
+            name="observableGoods"
+            type="test.hjd.com.databindingtest.model.ObservableGoods" />
+
+
+        <variable
+            name="obsevableList"
+            type="android.databinding.ObservableList&lt;String&gt;" />
+
+        <variable
+            name="index"
+            type="int" />
+
+        <variable
+            name="observableMap"
+            type="android.databinding.ObservableMap&lt;String,String&gt;" />
+
+
+        <variable
+            name="key"
+            type="String" />
+
+        <variable
+            name="clickHandler"
+            type="test.hjd.com.databindingtest.MainActivity.ClickHandler" />
+
+        <import type="test.hjd.com.databindingtest.StringUtil" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{userInfo.name,default=hjd}" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{userInfo1.name}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(userInfo2.salary)}" />
+
+        <fragment
+            android:id="@+id/fragment_main"
+            android:name="test.hjd.com.databindingtest.fragment.MainFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{goods.name}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{String.valueOf(goods.price)}" />
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{goods.detail}" />
+
+
+        <Button
+            android:id="@+id/bt_change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="点击改变userInfo的数值" />
+
+
+        <Button
+            android:id="@+id/bt_change1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="点击改变userInfo的price" />
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@{observableGoods.name}" />-->
+
+
+        <!--
+        ObservableCollection的使用
+        -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{obsevableList[index]}" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{observableMap[key]}" />
+
+        <!--<EditText-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="@={observableGoods.name}" />-->
+
+
+        <!--
+        DataBinding中时间的处理
+        -->
+        <Button
+            android:id="@+id/bt_sayhello"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->clickHandler.sayHello()}"
+            android:text="点击sayHello" />
+
+        <!--
+        类方法的使用
+        -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{StringUtil.toUpperCase(observableGoods.name) + obsevableList[index]}" />
+
+
+        <!--<include-->
+            <!--android:id="@+id/include_view"-->
+            <!--layout="@layout/layout_main"-->
+            <!--bind:userInfo="@{userInfo}" />-->
+
+        <ViewStub
+            android:id="@+id/vs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout="@layout/viewstub_main"
+            bind:userInfo="@{userInfo}" />
+
+
+        <!--
+        使用BindingAdapter来监听自定义属性的变化
+        -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="这个用于演示嘿嘿"
+            bind:heihei="@{userInfo.name}"
+            />
+
+
+
+        <!--
+        DataBinding中资源的引用
+        -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/app_name}"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{@string/app_name}"
+            android:textSize="@{@dimen/my_text_size}"
+            />
+
+    </LinearLayout>
+</layout>
